@@ -1,60 +1,20 @@
 <?php
 declare(strict_types=1);
 
-namespace Banking;
+use Banking\Factory;
 
-use Banking\Order;
-use Transport\SimpleMailer;
+// Прототип работы с модулем
+// Вместо фейковых фабрик надо реализовать реальные
 
-interface iCard
-{
-    public function calcVat();
-
-    public function notify();
-
-    public function makeOrder(float $discount = 1.0);
+// Создаем липовые покупки.
+$itemsCount = 10;
+$items      = [];
+while ($itemsCount--) {
+    $items [] = Factory::createFakeOrderItem();
 }
 
-class Card implements iCard
-{
-    public $items;
+$card = Factory::createFakeCard();
+// Отправка уведомления осуществляется из фабрики заказа.
+$card->addOrder(Factory::createOrder($items, 0.98));
 
-    public $order;
-
-    public function calcVat()
-    {
-        $vat = 0;
-        foreach ($this->items as $item) {
-            $vat += $item->getPrice() * 0.18;
-        }
-
-        return $vat;
-    }
-
-    public function notify()
-    {
-        $this->sendMail();
-    }
-
-    public function sendMail()
-    {
-        $m = new SimpleMailer('cartuser', 'j049lj-01');
-        $p = 0;
-        foreach ($this->items as $item) {
-            $p += $item->getPrice() * 1.18;
-        }
-        $ms = "<p> <b>".$this->order->id()."</b> ".$p." .</p>";
-
-        $m->sendToManagers($ms);
-    }
-
-    public function makeOrder(float $discount = 1.0)
-    {
-        $p = 0;
-        foreach ($this->items as $item) {
-            $p += $item->getPrice() * 1.18 * $discount;
-        }
-        $this->order = new Order($this->items, $p);
-        $this->sendMail();
-    }
-}
+// Продолжаем работу с картой ....
