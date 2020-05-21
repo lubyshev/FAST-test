@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 interface iCart
 {
@@ -6,12 +7,13 @@ interface iCart
 
     public function notify();
 
-    public function makeOrder($discount = 1.0);
+    public function makeOrder(float $discount = 1.0);
 }
 
 class Cart implements iCart
 {
     public $items;
+
     public $order;
 
     public function calcVat()
@@ -20,6 +22,7 @@ class Cart implements iCart
         foreach ($this->items as $item) {
             $vat += $item->getPrice() * 0.18;
         }
+
         return $vat;
     }
 
@@ -35,12 +38,12 @@ class Cart implements iCart
         foreach ($this->items as $item) {
             $p += $item->getPrice() * 1.18;
         }
-        $ms = "<p> <b>" . $this->order->id() . "</b> " . $p . " .</p>";
+        $ms = "<p> <b>".$this->order->id()."</b> ".$p." .</p>";
 
         $m->sendToManagers($ms);
     }
 
-    public function makeOrder($discount)
+    public function makeOrder(float $discount = 1.0)
     {
         $p = 0;
         foreach ($this->items as $item) {
