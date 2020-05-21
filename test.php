@@ -1,7 +1,12 @@
 <?php
 declare(strict_types=1);
 
-interface iCart
+namespace Banking;
+
+use Banking\Order;
+use Transport\SimpleMailer;
+
+interface iCard
 {
     public function calcVat();
 
@@ -10,7 +15,7 @@ interface iCart
     public function makeOrder(float $discount = 1.0);
 }
 
-class Cart implements iCart
+class Card implements iCard
 {
     public $items;
 
