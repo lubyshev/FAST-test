@@ -19,6 +19,18 @@ interface OrderInterface
     public function setId(string $id): self;
 
     /**
+     * @return float
+     */
+    public function getDiscount(): float;
+
+    /**
+     * @param float $value
+     *
+     * @return $this
+     */
+    public function setDiscount(float $value): self;
+
+    /**
      * @param \Banking\OrderItemInterface $item
      *
      * @return $this
@@ -31,8 +43,15 @@ interface OrderInterface
     public function getItems(): array;
 
     /**
-     * @return $this
+     * @return float
      */
-    public function notify(): self;
+    public function getPrice(): float;
+
+    /**
+     * Возвращает стоимость с учетом налогов и скидок.
+     *
+     * @return float
+     */
+    public function getCost(): float;
 
 }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Banking;
 
+use Transport\SimpleMailer;
+
 class Factory
 {
     public static function createFakeCard(): ?CardInterface
@@ -13,12 +15,23 @@ class Factory
 
     public static function createOrder(array $items, float $discount = 1.0): ?OrderInterface
     {
-        /** @todo Более сильный Id */
-        $order = (new Order($discount))->setId(sha1(microtime()));
+        $order = (new Order())
+            ->setId(sha1(microtime()))
+            ->setDiscount($discount);
+
         foreach ($items as $item) {
             $order->addItem($item);
         }
-        $order->notify();
+
+        // Отправляем уведомление менеджерам.
+        (new SimpleMailer())
+            ->sendToManagers(
+                sprintf(
+                    '<p><b>%s</b> %.2f.</p>',
+                    $order->getId(),
+                    $order->getCost()
+                )
+            );
 
         return $order;
     }
