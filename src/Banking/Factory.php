@@ -8,12 +8,21 @@ use Transport\SimpleMailer;
 
 class Factory
 {
+    /**
+     * @return \Banking\CardInterface|null
+     */
     public static function createFakeCard(): ?CardInterface
     {
         return null;
     }
 
-    public static function createOrder(array $items, float $discount = 1.0): ?OrderInterface
+    /**
+     * @param array $items
+     * @param float $discount
+     *
+     * @return \Banking\OrderInterface
+     */
+    public static function createOrder(array $items, float $discount = 1.0): OrderInterface
     {
         $order = (new Order())
             ->setId(sha1(microtime()))
@@ -36,6 +45,9 @@ class Factory
         return $order;
     }
 
+    /**
+     * @return \Banking\OrderItemInterface|null
+     */
     public static function createFakeOrderItem(): ?OrderItemInterface
     {
         return null;

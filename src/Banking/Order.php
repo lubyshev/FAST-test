@@ -69,7 +69,7 @@ class Order implements OrderInterface
     }
 
     /**
-     * @return float
+     * @inheritDoc
      */
     public function getPrice(): float
     {
@@ -82,7 +82,7 @@ class Order implements OrderInterface
     }
 
     /**
-     * @return float
+     * @inheritDoc
      */
     public function getCost(): float
     {

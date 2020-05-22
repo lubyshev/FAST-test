@@ -12,7 +12,7 @@ class SimpleMailer implements TransportInterface
 
     private string $password;
 
-    public function __construct(string $login, string $password)
+    public function __construct()
     {
         /** @todo Взять из ENV */
         $this->login    = self::MAILER_LOGIN;
