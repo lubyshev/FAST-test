@@ -17,7 +17,7 @@ class Factory
     }
 
     /**
-     * @param array $items
+     * @param \Banking\OrderItemInterface[] $items
      * @param float $discount
      *
      * @return \Banking\OrderInterface
